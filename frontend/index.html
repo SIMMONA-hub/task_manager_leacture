@@ -9,12 +9,13 @@
             --primary-color: #2563eb;
             --primary-hover: #1d4ed8;
             --danger-color: #dc2626;
-            --success-color: #16a34a;
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --text-color: #1e293b;
             --border-color: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --nav-height: 60px;
+            --footer-height: 60px;
+            --sidebar-width: 250px;
         }
 
         * {
@@ -24,259 +25,327 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.5;
             min-height: 100vh;
-            padding: 2rem 1rem;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        h1 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            color: var(--primary-color);
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-color);
-        }
-
-        .auth-container {
             display: flex;
-            gap: 2rem;
-            margin-bottom: 2rem;
+            flex-direction: column;
         }
 
-        #auth-section, #register-section {
-            flex: 1;
+        /* Navigation */
+        nav {
+            background: var(--card-bg);
+            height: var(--nav-height);
+            padding: 0 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        nav h1 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Main Layout */
+        .main-container {
+            margin-top: var(--nav-height);
+            min-height: calc(100vh - var(--nav-height) - var(--footer-height));
+            display: flex;
+        }
+
+        /* Sidebar */
+        aside {
+            width: var(--sidebar-width);
             background: var(--card-bg);
             padding: 2rem;
-            border-radius: 0.75rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.2s ease;
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: var(--nav-height);
+            bottom: var(--footer-height);
+            overflow-y: auto;
         }
 
-        #auth-section:hover, #register-section:hover {
-            transform: translateY(-2px);
+        /* Main Content */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
         }
 
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            height: var(--footer-height);
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 1px solid var(--border-color);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        /* Auth Forms */
+        .auth-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .auth-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* Forms */
         .form-group {
             margin-bottom: 1rem;
         }
 
         input, textarea {
             width: 100%;
-            padding: 0.75rem 1rem;
+            padding: 0.75rem;
             border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
+            border-radius: 0.25rem;
             font-size: 1rem;
-            transition: border-color 0.2s ease;
-            outline: none;
-        }
-
-        input:focus, textarea:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        textarea {
-            min-height: 100px;
-            resize: vertical;
         }
 
         button {
             width: 100%;
-            padding: 0.75rem 1.5rem;
-            background-color: var(--primary-color);
+            padding: 0.75rem;
+            background: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 0.5rem;
+            border-radius: 0.25rem;
             font-size: 1rem;
-            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s ease;
+            transition: background 0.2s;
         }
 
         button:hover {
-            background-color: var(--primary-hover);
+            background: var(--primary-hover);
         }
 
-        #tasks-section {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 0.75rem;
-            box-shadow: var(--shadow);
-        }
-
+        /* Tasks */
         .task-form {
-            margin-bottom: 2rem;
+            background: var(--card-bg);
             padding: 1.5rem;
-            background: var(--bg-color);
             border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
         }
 
         .task {
-            background: var(--bg-color);
+            background: var(--card-bg);
             padding: 1.5rem;
             border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            transition: transform 0.2s ease;
-        }
-
-        .task:hover {
-            transform: translateX(4px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .task h3 {
-            margin-bottom: 0.5rem;
             color: var(--primary-color);
-        }
-
-        .task p {
-            margin-bottom: 1rem;
-            color: var(--text-color);
-        }
-
-        .task small {
-            display: block;
-            margin-bottom: 1rem;
-            color: #64748b;
+            margin-bottom: 0.5rem;
         }
 
         .task-actions {
             display: flex;
             gap: 0.5rem;
+            margin-top: 1rem;
         }
 
         .task-actions button {
             width: auto;
             padding: 0.5rem 1rem;
-            font-size: 0.875rem;
         }
 
         .task-actions button:last-child {
-            background-color: var(--danger-color);
+            background: var(--danger-color);
         }
 
-        .logout-btn {
-            background-color: var(--danger-color);
-            margin-bottom: 1.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .auth-container {
-                flex-direction: column;
-            }
-
-            #auth-section, #register-section {
-                width: 100%;
-            }
-
-            .container {
-                padding: 0;
-            }
-
-            body {
-                padding: 1rem;
-            }
-        }
-
-        /* Loading animation */
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
+        /* Loading Animation */
         .loading {
             position: relative;
             opacity: 0.7;
-            pointer-events: none;
         }
 
         .loading::after {
             content: '';
             position: absolute;
-            top: calc(50% - 1rem);
-            left: calc(50% - 1rem);
+            top: 50%;
+            left: 50%;
             width: 2rem;
             height: 2rem;
+            margin: -1rem 0 0 -1rem;
             border: 2px solid #f3f3f3;
             border-top: 2px solid var(--primary-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            aside {
+                display: none;
+            }
+
+            main {
+                margin-left: 0;
+            }
+
+            .auth-container {
+                padding: 1rem;
+            }
+
+            nav {
+                padding: 0 1rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- Navigation -->
+    <nav>
         <h1>Task Manager</h1>
-        
-        <div class="auth-container" id="auth-container">
-            <div id="auth-section">
-                <h2>Login</h2>
-                <div class="form-group">
-                    <input type="text" id="username" placeholder="Username" autocomplete="username">
+        <div class="nav-actions" id="nav-actions">
+            <!-- Login/Logout buttons will be here -->
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <h2>Quick Stats</h2>
+            <div id="stats">
+                <p>Total Tasks: <span id="total-tasks">0</span></p>
+                <p>Completed: <span id="completed-tasks">0</span></p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Auth Section -->
+            <div class="auth-container" id="auth-container">
+                <div class="auth-card">
+                    <h2>Login</h2>
+                    <div class="form-group">
+                        <input type="text" id="username" placeholder="Username" autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+                    </div>
+                    <button onclick="login()">Login</button>
                 </div>
-                <div class="form-group">
-                    <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+
+                <div class="auth-card">
+                    <h2>Register</h2>
+                    <div class="form-group">
+                        <input type="text" id="reg-username" placeholder="Username" autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="reg-email" placeholder="Email" autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="reg-password" placeholder="Password" autocomplete="new-password">
+                    </div>
+                    <button onclick="registerUser()">Register</button>
                 </div>
-                <button onclick="login()">Login</button>
             </div>
 
-            <div id="register-section">
-                <h2>Register</h2>
-                <div class="form-group">
-                    <input type="text" id="reg-username" placeholder="Username" autocomplete="username">
+            <!-- Tasks Section -->
+            <div id="tasks-section" style="display:none;">
+                <div class="task-form">
+                    <h2>Add New Task</h2>
+                    <div class="form-group">
+                        <input type="text" id="task-title" placeholder="Task title">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="task-desc" placeholder="Description"></textarea>
+                    </div>
+                    <button onclick="createTask()">Add Task</button>
                 </div>
-                <div class="form-group">
-                    <input type="email" id="reg-email" placeholder="Email" autocomplete="email">
-                </div>
-                <div class="form-group">
-                    <input type="password" id="reg-password" placeholder="Password" autocomplete="new-password">
-                </div>
-                <button onclick="registerUser()">Register</button>
-            </div>
-        </div>
 
-        <div id="tasks-section" style="display:none;">
-            <button onclick="logout()" class="logout-btn">Logout</button>
-            
-            <div class="task-form">
-                <h2>Add New Task</h2>
-                <div class="form-group">
-                    <input type="text" id="task-title" placeholder="Task title">
-                </div>
-                <div class="form-group">
-                    <textarea id="task-desc" placeholder="Description"></textarea>
-                </div>
-                <button onclick="createTask()">Add Task</button>
+                <h2>Your Tasks</h2>
+                <div class="tasks-grid" id="tasks-list"></div>
             </div>
-            
-            <h2>Your Tasks</h2>
-            <div id="tasks-list"></div>
-        </div>
+        </main>
     </div>
 
-    <script>
-        let token = null; // no tokens anymore
-        const API_BASE = 'http://localhost:8000';
-        let authHeader = null;
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Task Manager. All rights reserved.</p>
+    </footer>
 
-        // Check for stored basic credentials
+    <script>
+        let authHeader = null;
+        const API_BASE = 'http://localhost:8000';
+
+        // Check for stored credentials
         const storedCred = localStorage.getItem('basicAuth');
         if (storedCred) {
             authHeader = 'Basic ' + storedCred;
             showTasks();
             loadTasks();
+        }
+        updateNavigation();
+
+        function updateNavigation() {
+            const navActions = document.getElementById('nav-actions');
+            if (authHeader) {
+                navActions.innerHTML = '<button onclick="logout()" style="width: auto;">Logout</button>';
+            } else {
+                navActions.innerHTML = '';
+            }
+        }
+
+        async function updateStats() {
+            if (!authHeader) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/tasks/`, {
+                    headers: { 'Authorization': authHeader }
+                });
+                
+                if (response.ok) {
+                    const tasks = await response.json();
+                    document.getElementById('total-tasks').textContent = tasks.length;
+                    document.getElementById('completed-tasks').textContent = 
+                        tasks.filter(task => task.completed).length;
+                }
+            } catch (error) {
+                console.error('Error updating stats:', error);
+            }
         }
         
         async function login() {
@@ -298,6 +367,7 @@
                     authHeader = 'Basic ' + encoded;
                     showTasks();
                     loadTasks();
+                    updateNavigation();
                 } else {
                     alert('Login failed');
                 }
@@ -309,13 +379,15 @@
         function showTasks() {
             document.getElementById('auth-container').style.display = 'none';
             document.getElementById('tasks-section').style.display = 'block';
+            updateStats();
         }
         
         function logout() {
             localStorage.removeItem('basicAuth');
             authHeader = null;
-            document.getElementById('auth-container').style.display = 'flex';
+            document.getElementById('auth-container').style.display = 'grid';
             document.getElementById('tasks-section').style.display = 'none';
+            updateNavigation();
         }
         
         async function createTask() {
@@ -344,6 +416,7 @@
                     document.getElementById('task-title').value = '';
                     document.getElementById('task-desc').value = '';
                     loadTasks();
+                    updateStats();
                 }
             } catch (error) {
                 alert('Error creating task');
@@ -366,7 +439,7 @@
                     tasksList.innerHTML = '';
                     
                     if (tasks.length === 0) {
-                        tasksList.innerHTML = '<p style="text-align: center; color: #64748b;">No tasks yet. Create your first task above!</p>';
+                        tasksList.innerHTML = '<p style="text-align: center; grid-column: 1/-1; color: #64748b;">No tasks yet. Create your first task above!</p>';
                         return;
                     }
                     
@@ -384,6 +457,7 @@
                         `;
                         tasksList.appendChild(taskDiv);
                     });
+                    updateStats();
                 }
             } catch (error) {
                 console.error('Error loading tasks');
@@ -468,7 +542,6 @@
                     document.getElementById('reg-username').value = '';
                     document.getElementById('reg-email').value = '';
                     document.getElementById('reg-password').value = '';
-                    document.getElementById('auth-container').style.display = 'flex';
                 } else {
                     const errorData = await response.json();
                     alert('Registration failed: ' + (errorData.detail || 'Unknown error'));
