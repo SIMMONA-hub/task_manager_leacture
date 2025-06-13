@@ -23,13 +23,24 @@ services:
       - "8000:8000"
     environment:
       DATABASE_URL: postgresql://user:password@db:5432/taskdb
-      SECRET_KEY: your-super-secret-key-change-this-in-production
+      SECRET_KEY: my-secret-key-prod
     depends_on:
       db:
         condition: service_healthy
     volumes:
       - ./app:/app/app
       - ./frontend:/app/frontend
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    depends_on:
+      - app
 
 volumes:
   postgres_data:
